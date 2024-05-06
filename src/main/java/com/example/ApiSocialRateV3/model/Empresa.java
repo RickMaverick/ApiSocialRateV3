@@ -1,10 +1,10 @@
 package com.example.ApiSocialRateV3.model;
 
+import com.example.ApiSocialRateV3.controller.dto.EmpresaDTO;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.util.List;
 
@@ -15,7 +15,22 @@ public class Empresa {
     @GeneratedValue
     private Long id;
     private String nome;
+    private String email;
     private String nicho;
     @Nullable
+    @OneToMany
+    @JoinColumn(name = "empresa_id")
     private List<Campanha> campanhas;
+
+    //Construtor DTO
+    public Empresa(@NonNull EmpresaDTO empresaDTO){
+        this.nome = empresaDTO.getNome();
+        this.email = empresaDTO.getEmail();
+        this.nicho = empresaDTO.getNicho();
+    }
+
+    //Construtor Vazio
+    public Empresa(){
+
+    }
 }
